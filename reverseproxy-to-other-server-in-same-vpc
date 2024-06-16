@@ -1,0 +1,21 @@
+upstream backend_app0 {
+    server 192.31.2.212:3001;#private ip of instance
+}
+
+upstream backend_app1 {
+    server 192.31.2.212:8080;#private ip of instance
+}
+server {
+    listen 80 default_server;
+    #listen [::]:80 default_server;
+    #listen 80;
+
+    server_name _;
+
+    location /app0 {
+        proxy_pass http://backend_app0/;
+    }
+    location /app1 {
+        proxy_pass http://backend_app1/;
+    }    
+}
